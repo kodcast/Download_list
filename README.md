@@ -1,7 +1,7 @@
 # Download List - Nicotine+ Plugin
 
 ## 📌 Description
-Download List is a plugin for [Nicotine+](https://nicotine-plus.org/) that allows you to search and download multiple files based on a predefined list of search terms. It automates the search process, applies filters (format and quality), and initiates downloads seamlessly.
+Download List is a plugin for [Nicotine+](https://github.com/nicotine-plus/nicotine-plus) that allows you to search and download multiple files based on a predefined list of search terms. It automates the search process, applies filters (format and quality), and initiates downloads seamlessly.
 
 ## 🚀 Features
 - 📂 **Batch Searching & Downloading**: Enter multiple search terms and let the plugin find and download the files for you.
