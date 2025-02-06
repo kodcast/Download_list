@@ -1,0 +1,4 @@
+Version = "2025-01"
+Authors = ["K0d"]
+Name = "Download_list"
+Description = "Searching and downloading with a list\n\n ##Nicotine configuration##\nYou need to limit your result count to 300 in Nicotine+ settings for better performance "
