@@ -1,0 +1,104 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: telechargement_list 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-06 00:00+0000\n"
+"PO-Revision-Date: 2025-02-06 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Plugin.__init__:...
+msgid "🔄 Loading Download by List plugin..."
+msgstr "🔄 Download-by-List-Plugin wird geladen..."
+
+msgid "🔔 Plugin loaded."
+msgstr "🔔 Plugin geladen."
+
+msgid "🔧 Creating main window..."
+msgstr "🔧 Hauptfenster wird erstellt..."
+
+msgid "Download by List"
+msgstr "Download by List"
+
+msgid "Enter search terms below:"
+msgstr "Geben Sie die Suchbegriffe unten ein:"
+
+msgid "Audio Format:"
+msgstr "Audioformat:"
+
+msgid "Audio Quality:"
+msgstr "Audioqualität:"
+
+msgid "Search and Download"
+msgstr "Suchen und Herunterladen"
+
+msgid "No valid content in the text area."
+msgstr "Kein gültiger Inhalt im Textbereich."
+
+msgid "⚠️ Please enter at least one search term."
+msgstr "⚠️ Bitte geben Sie mindestens einen Suchbegriff ein."
+
+msgid "⚠️ No valid search terms found."
+msgstr "⚠️ Keine gültigen Suchbegriffe gefunden."
+
+msgid "🔍 Starting searches for {count} term(s)"
+msgstr "🔍 Starte Suche für {count} Begriff(e)"
+
+msgid "📡 Searching for: {term}"
+msgstr "📡 Suche nach: {term}"
+
+msgid "❌ Error during search for '{term}': {error}"
+msgstr "❌ Fehler bei der Suche nach '{term}': {error}"
+
+msgid "❌ No file found for:\n "
+msgstr "❌ Keine Datei gefunden für:\n "
+
+msgid "✅ All files have been found."
+msgstr "✅ Alle Dateien wurden gefunden."
+
+msgid "❌ Window closed."
+msgstr "❌ Fenster geschlossen."
+
+msgid "🖱️ 'Search and Download' button clicked!"
+msgstr "🖱️ 'Suchen und Herunterladen'-Taste wurde gedrückt!"
+
+msgid "📩 Received search results..."
+msgstr "📩 Suchergebnisse empfangen..."
+
+msgid "❌ Error extracting tuple: {error}"
+msgstr "❌ Fehler beim Extrahieren des Tupels: {error}"
+
+msgid "❌ Error converting bitrate: {error}"
+msgstr "❌ Fehler bei der Umrechnung der Bitrate: {error}"
+
+msgid "🎯 Checking file: {filename} (Format: {h_format}, Quality: {h_quality}, Format match: {format_match}, Quality match: {quality_match}, private: {is_private})"
+msgstr "🎯 Prüfe Datei: {filename} (Format: {h_format}, Qualität: {h_quality}, Format stimmt: {format_match}, Qualität stimmt: {quality_match}, privat: {is_private})"
+
+msgid "✅ Matching result found for {term}: {filename}"
+msgstr "✅ Übereinstimmendes Ergebnis gefunden für {term}: {filename}"
+
+msgid "❌ No matching file found for {term}"
+msgstr "❌ Keine übereinstimmende Datei gefunden für {term}"
+
+msgid "🚀 Download launched for: {file}"
+msgstr "🚀 Download gestartet für: {file}"
+
+msgid "❌ Error downloading {file}: {error}"
+msgstr "❌ Fehler beim Herunterladen von {file}: {error}"
+
+
+#: Ajouté par update_translations.sh
+msgid "Stop"
+msgstr "Stopp"
+
+#: Ajouté par update_translations.sh
+msgid "Pause"
+msgstr "Pause"
+
+#: Ajouté par update_translations.sh
+msgid "Resume"
+msgstr "Fortsetzen"

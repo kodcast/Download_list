@@ -1,0 +1,104 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: download_list 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-06 00:00+0000\n"
+"PO-Revision-Date: 2025-02-06 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Plugin.__init__:...
+msgid "🔄 Loading Download by List plugin..."
+msgstr "🔄 Ładowanie wtyczki Download by List..."
+
+msgid "🔔 Plugin loaded."
+msgstr "🔔 Wtyczka załadowana."
+
+msgid "🔧 Creating main window..."
+msgstr "🔧 Tworzenie głównego okna..."
+
+msgid "Download by List"
+msgstr "Pobieranie według listy"
+
+msgid "Enter search terms below:"
+msgstr "Wprowadź poniżej terminy wyszukiwania:"
+
+msgid "Audio Format:"
+msgstr "Format audio:"
+
+msgid "Audio Quality:"
+msgstr "Jakość audio:"
+
+msgid "Search and Download"
+msgstr "Szukaj i pobieraj"
+
+msgid "No valid content in the text area."
+msgstr "Brak prawidłowej treści w polu tekstowym."
+
+msgid "⚠️ Please enter at least one search term."
+msgstr "⚠️ Proszę wprowadzić przynajmniej jeden termin wyszukiwania."
+
+msgid "⚠️ No valid search terms found."
+msgstr "⚠️ Nie znaleziono żadnych prawidłowych terminów wyszukiwania."
+
+msgid "🔍 Starting searches for {count} term(s)"
+msgstr "🔍 Rozpoczynanie wyszukiwania dla {count} terminu/ów"
+
+msgid "📡 Searching for: {term}"
+msgstr "📡 Wyszukiwanie: {term}"
+
+msgid "❌ Error during search for '{term}': {error}"
+msgstr "❌ Błąd podczas wyszukiwania '{term}': {error}"
+
+msgid "❌ No file found for:\n "
+msgstr "❌ Nie znaleziono pliku dla:\n "
+
+msgid "✅ All files have been found."
+msgstr "✅ Wszystkie pliki zostały znalezione."
+
+msgid "❌ Window closed."
+msgstr "❌ Okno zamknięte."
+
+msgid "🖱️ 'Search and Download' button clicked!"
+msgstr "🖱️ Kliknięto przycisk 'Szukaj i pobieraj'!"
+
+msgid "📩 Received search results..."
+msgstr "📩 Otrzymano wyniki wyszukiwania..."
+
+msgid "❌ Error extracting tuple: {error}"
+msgstr "❌ Błąd przy ekstrakcji krotki: {error}"
+
+msgid "❌ Error converting bitrate: {error}"
+msgstr "❌ Błąd przy konwersji bitrate: {error}"
+
+msgid "🎯 Checking file: {filename} (Format: {h_format}, Quality: {h_quality}, Format match: {format_match}, Quality match: {quality_match}, private: {is_private})"
+msgstr "🎯 Sprawdzanie pliku: {filename} (Format: {h_format}, Jakość: {h_quality}, Format zgodny: {format_match}, Jakość zgodna: {quality_match}, prywatny: {is_private})"
+
+msgid "✅ Matching result found for {term}: {filename}"
+msgstr "✅ Znaleziono pasujący wynik dla {term}: {filename}"
+
+msgid "❌ No matching file found for {term}"
+msgstr "❌ Nie znaleziono pasującego pliku dla {term}"
+
+msgid "🚀 Download launched for: {file}"
+msgstr "🚀 Pobieranie rozpoczęte dla: {file}"
+
+msgid "❌ Error downloading {file}: {error}"
+msgstr "❌ Błąd przy pobieraniu {file}: {error}"
+
+
+#: Ajouté par update_translations.sh
+msgid "Stop"
+msgstr "Zatrzymaj"
+
+#: Ajouté par update_translations.sh
+msgid "Pause"
+msgstr "Pauza"
+
+#: Ajouté par update_translations.sh
+msgid "Resume"
+msgstr "Wznów"
