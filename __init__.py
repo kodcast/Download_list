@@ -36,6 +36,10 @@ class Plugin(BasePlugin):
         self.download_delay = 3
         # Set (without duplicates) of terms for which no file was found.
         self.missing_search_terms = set()
+        # Flag indicating if the search process has been stopped by the user.
+        self.search_stopped = False
+        # Flag indicating if the search process is paused.
+        self.paused = False
 
     def loaded_notification(self):
         """Called when the plugin is loaded."""
@@ -93,10 +97,22 @@ class Plugin(BasePlugin):
         self.quality_combo.set_active(0)
         self.widget.append(self.quality_combo)
 
-        # Button to start search and download
-        apply_button = Gtk.Button(label=_("Search and Download"))
+        # Container for the three buttons: Search and Download, Stop, and Pause/Resume.
+        button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+
+        apply_button = Gtk.Button(label="🔍 " + _("Search and Download"))
         apply_button.connect("clicked", self.on_apply_button_clicked)
-        self.widget.append(apply_button)
+        button_box.append(apply_button)
+
+        stop_button = Gtk.Button(label="⏹️ " + _("Stop"))
+        stop_button.connect("clicked", self.on_stop_button_clicked)
+        button_box.append(stop_button)
+
+        self.pause_button = Gtk.Button(label="⏸️ " + _("Pause"))
+        self.pause_button.connect("clicked", self.on_pause_button_clicked)
+        button_box.append(self.pause_button)
+
+        self.widget.append(button_box)
 
         # Scrollable area for displaying final messages (e.g. terms not found)
         final_scrolled = Gtk.ScrolledWindow()
@@ -126,7 +142,14 @@ class Plugin(BasePlugin):
         self.download_launched = False
         self.current_search_index = 0
         self.missing_search_terms = set()
-        self.current_timeout = None
+        # Reset flags when starting a new search
+        self.search_stopped = False
+        self.paused = False
+        self.pause_button.set_label("⏸️ " + _("Pause"))
+        # Remove any previous timer if still running.
+        if self.current_timeout is not None:
+            GLib.source_remove(self.current_timeout)
+            self.current_timeout = None
         self.set_final_message("")
         text_content = self.text_buffer.get_text(
             self.text_buffer.get_start_iter(),
@@ -145,10 +168,48 @@ class Plugin(BasePlugin):
         self.log(_("🔍 Starting searches for {count} term(s)").format(count=len(self.search_terms)))
         self.schedule_next_search()
 
+    def on_stop_button_clicked(self, button):
+        """Stops the current search process."""
+        self.log(_("⏹️ Stop button clicked. Stopping search..."))
+        self.search_stopped = True
+        # Cancel any pending timeout
+        if self.current_timeout is not None:
+            GLib.source_remove(self.current_timeout)
+            self.current_timeout = None
+        self.set_final_message(_("Search stopped by user."))
+
+    def on_pause_button_clicked(self, button):
+        """Toggle pause/resume of the search process."""
+        if not self.paused:
+            # Passage en pause
+            self.paused = True
+            if self.current_timeout is not None:
+                GLib.source_remove(self.current_timeout)
+                self.current_timeout = None
+            self.set_final_message(_("Search paused by user."))
+            self.pause_button.set_label("▶️ " + _("Resume"))
+            self.log(_("⏸️ Search paused by user."))
+        else:
+            # Reprise de la recherche
+            self.paused = False
+            self.set_final_message(_("Search resumed."))
+            self.pause_button.set_label("⏸️ " + _("Pause"))
+            self.log(_("▶️ Search resumed."))
+            self.schedule_next_search()
+
     def schedule_next_search(self):
         """
         Processes the current term and then schedules checking and moving to the next term.
         """
+        if self.search_stopped:
+            self.log(_("⏹️ Search process has been stopped by the user."))
+            self.set_final_message(_("Search stopped by user."))
+            return
+
+        if self.paused:
+            self.log(_("⏸️ Search process is paused."))
+            return
+
         if self.current_search_index >= len(self.search_terms):
             if self.missing_search_terms:
                 message = _("❌ No file found for:\n ") + "\n ".join(sorted(self.missing_search_terms))
@@ -182,6 +243,10 @@ class Plugin(BasePlugin):
         Checks if a result has been found for the given term.
         If no download was launched, adds the term to the missing list and processes the next term.
         """
+        if self.search_stopped or self.paused:
+            self.log(_("Search process is paused or stopped."))
+            return False
+
         if term == self.current_pending_term and not self.download_launched:
             self.log(_("❌ No matching file found for {term}").format(term=term))
             self.missing_search_terms.add(term)
@@ -194,7 +259,7 @@ class Plugin(BasePlugin):
         Processes the search response. If a matching result is found for the current term
         (stored in self.current_pending_term), launches the download.
         """
-        if self.download_launched:
+        if self.search_stopped or self.paused or self.download_launched:
             return
 
         self.log(_("📩 Received search results..."))
@@ -227,7 +292,6 @@ class Plugin(BasePlugin):
             else:
                 h_quality = h_quality or ""
 
-            # Normalize strings for reliable comparison.
             quality_match = normalize_quality(selected_quality) == normalize_quality(h_quality) if h_quality else False
             format_match = (h_format == selected_format)
             is_private = "[prive]" in filename.lower()
@@ -238,23 +302,24 @@ class Plugin(BasePlugin):
             if format_match and quality_match and not is_private:
                 found_match = True
                 self.log(_("✅ Matching result found for {term}: {filename}").format(term=self.current_pending_term, filename=filename))
-                # Cancel the timer for this term.
                 if self.current_timeout is not None:
                     GLib.source_remove(self.current_timeout)
                     self.current_timeout = None
-                # Schedule download after a delay, then process the next term.
                 GLib.timeout_add_seconds(self.download_delay, self.delayed_download, user, file_path)
                 self.download_launched = True
                 break
 
         if not found_match:
             self.log(_("❌ No matching file found for {term}").format(term=self.current_pending_term))
-            # If no match is detected, process_current_search (triggered by timer) will handle the term.
 
     def delayed_download(self, user, file_path):
         """
         Launches the download after a delay, then processes the next term.
         """
+        if self.search_stopped or self.paused:
+            self.log(_("⏸️/⏹️ Download postponed due to pause/stop command."))
+            return False
+
         try:
             core.downloads.enqueue_download(user, file_path)
             self.log(_("🚀 Download launched for: {file}").format(file=file_path))
@@ -266,4 +331,3 @@ class Plugin(BasePlugin):
     def log(self, message):
         """Logs a message in Nicotine+ logs."""
         print(f"[Download List] {message}")
-
